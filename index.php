@@ -1,7 +1,5 @@
 <?php
-require_once(__DIR__ . '/Log.php');
-require_once(__DIR__ . '/Collection.php');
-require_once(__DIR__ . '/Database.php');
+require __DIR__ . '/vendor/autoload.php';
 
 use Wouerner\Log as Log;
 use Wouerner\Collection as Collection;
