@@ -1,10 +1,19 @@
 # append-only-log
 
-Regras:
+Objetivos:
+Validar os logs dos projetos e descartar logs fraudulentos.
 
-1. sha256 com dados do chain.
-2. todo chain sem prev_hash é um chain genesis.
-3. salvar no banco de dados apenas chain validados.
-4. pesquisa de chain
-5. teste de chain com dados incorretos
-6. implementar chaves privadas e publicas.
+Tecnologias:
+
+PHP 7+
+Composer
+Sqlite3
+
+Algoritmo de para criar o hash:
+hash('id' + 'prev_hash' + getDataRaw())
+
+Função hash utilizada: sha256
+
+
+todo:
+Implementar chaves privadas e publicas como metodo de validação de identidade.
