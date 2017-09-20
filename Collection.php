@@ -1,15 +1,13 @@
 <?php
 namespace Wouerner;
 
-require_once(__DIR__ . '/Log.php');
-
 use Wouerner\Log as Log;
 
 class Collection extends \SplObjectStorage
 {
-    function showRaw()
+    public function showRaw()
     {
-        if (!empty($this)){
+        if (!empty($this)) {
             foreach ($this as $obj) {
                 var_dump($obj);
             }
@@ -18,7 +16,7 @@ class Collection extends \SplObjectStorage
         }
     }
 
-    function genesis()
+    public function genesis()
     {
         foreach ($this as $obj) {
             if (is_null($obj->prev_hash)) {
@@ -27,7 +25,7 @@ class Collection extends \SplObjectStorage
         }
     }
 
-    function findChain($hash)
+    public function findChain($hash)
     {
         foreach ($this as $obj) {
             if ($obj->hash == $hash) {
@@ -38,7 +36,7 @@ class Collection extends \SplObjectStorage
     }
 
     // busca o proximo registro
-    function nextChain($hash)
+    public function nextChain($hash)
     {
         foreach ($this as $obj) {
             if (!is_null($obj->prev_hash) && $obj->prev_hash == $hash) {
@@ -48,7 +46,7 @@ class Collection extends \SplObjectStorage
     }
 
     // com o hash inicial percorre os proximos elementos
-    function orderChain($genesis, &$storageNew)
+    public function orderChain($genesis, &$storageNew)
     {
         $next = nextChain($genesis->hash);
         if ($next) {
@@ -64,11 +62,15 @@ class Collection extends \SplObjectStorage
 
         $next = $this->nextChain($genesis->hash);
 
+        if (!$next) {
+            return 0;
+        }
+
         //2 log
         $log = new Log();
         $log->id = $genesis->id;
         $log->prev_hash = $genesis->hash;
-        $log->status = $next->status;
+        $log->setData($next->getData());
         $log->hash = $log->calculeHash();
 
         $chain = $this->findChain($log->hash);
@@ -84,4 +86,4 @@ class Collection extends \SplObjectStorage
         }
         return $verifiedStore;
     }
-} 
+}

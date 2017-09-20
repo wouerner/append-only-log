@@ -9,12 +9,12 @@ class Database
     {
         try {
             $this->con = new \PDO('sqlite:'.__DIR__.'/db.sqlite');
-        }
-        catch(\PDOException $e) {
+        } catch (\PDOException $e) {
             echo $e->getMessage();
         }
     }
-    public function select()
+
+    public function all()
     {
         $sql = "
                 SELECT *
@@ -30,16 +30,20 @@ class Database
 
     public function insert($id, $prev_hash, $hash, $data)
     {
-        $sql = "
-                SELECT *
-                from Chain
-                ";
+        $sql = "INSERT INTO Chain (
+                  'id', 'prev_hash', 'hash', 'data'
+              ) VALUES (
+                  ?, ?, ?, ?
+              )";
 
         $stm = $this->con->prepare($sql);
+
+        $stm->bindParam(1, $id);
+        $stm->bindParam(2, $prev_hash);
+        $stm->bindParam(3, $hash);
+        $stm->bindParam(4, $data);
 
         $result = $stm->execute();
         return $result;
     }
 }
-
-
