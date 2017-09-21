@@ -3,6 +3,9 @@
 Objetivos:
 Validar os logs dos projetos e descartar logs fraudulentos.
 
+Link da apresentação no google docs:
+https://docs.google.com/presentation/d/1HyM5CRyzeUIyJdh_JfTk2zvFGAWyiu7HJMfTH2IC9gM/edit?usp=sharing
+
 Tecnologias:
 
 PHP 7+

@@ -13,14 +13,14 @@ $log2 = new Log();
 $log3 = new Log();
 $log4 = new Log();
 
-/*Inicio projeto*/
+/* Log inicial projeto */
 $initData = new stdClass();
 $initData->nome = 'Salic';
 
 $initLog->id = '123';
 $initLog->setData($initData);
 $initLog->hash = $initLog->calculeHash();
-/*Inicio projeto*/
+/* Log inicial projeto */
 
 $logData = new stdClass();
 $logData->nome = 'Salic';
@@ -40,7 +40,7 @@ $log3->hash = $log3->calculeHash();
 /* $log3hack->prev_hash = $log2->hash . 'hack'; */
 /* $log3hack->hash = $log3->calculeHash(); */
 
-//hack
+/* log mal intencionado/errado */
 $log3hack = new Log();
 //hack
 $log3Data = new stdClass();
@@ -51,16 +51,21 @@ $log3hack->id = '123';
 $log3hack->prev_hash = $log2->hash;
 $log3hack->setData($log3Data);
 $log3hack->hash = $log3->calculeHash(); // hash bloco original
+/* log mal intencionado */
 
+/* Log final*/
 $log4->id = '123';
 $log4->prev_hash = $log3->hash;
 $log4->hash = $log4->calculeHash();
+/* Log final*/
 
+/* Vão para analise */
 $storage->attach($initLog);
 $storage->attach($log2);
 $storage->attach($log3);
 $storage->attach($log3hack);
 $storage->attach($log4);
+/* Vão para analise */
 
 $genesis = $storage->genesis();
 
@@ -68,10 +73,13 @@ $genesis = $storage->genesis();
 echo '<br>Dados Originais:';
 $storage->showRaw();
 
-echo '<br>Verificado';
 $vStore2 = new Collection();
+
+echo '<br>Verificado';
+/* Verificar os hash e dados dos logs */
 $storage->verify($genesis, $vStore2);
 
+/* Inserir no banco de dados os dados validados */
 foreach ($vStore2 as $obj) {
     $chain->insert($obj->id, $obj->prev_hash, $obj->hash, $obj->data);
 }
