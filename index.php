@@ -81,7 +81,7 @@ $storage->verify($genesis, $vStore2);
 
 /* Inserir no banco de dados os dados validados */
 foreach ($vStore2 as $obj) {
-    $chain->insert($obj->id, $obj->prev_hash, $obj->hash, $obj->data);
+    $chain->insert($obj->id, $obj->prev_hash, $obj->hash, $obj->getDataRaw());
 }
 
 $vStore2->showRaw();

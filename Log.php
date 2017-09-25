@@ -1,12 +1,14 @@
 <?php
 namespace Wouerner;
 
-class Log
+use \Wouerner\LogInterface;
+
+class Log implements LogInterface
 {
     public $id;
     public $prev_hash;
     public $hash;
-    public $data;
+    private $data = null;
 
     public function setData($data)
     {
